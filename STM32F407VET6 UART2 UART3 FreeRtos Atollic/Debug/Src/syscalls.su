@@ -3,7 +3,7 @@ syscalls.c:79:5:_getpid	0	static
 syscalls.c:84:5:_kill	8	static
 syscalls.c:90:6:_exit	8	static
 syscalls.c:96:27:_read	16	static
-syscalls.c:108:27:_write	8	static
+syscalls.c:108:27:_write	12	static,ignoring_inline_asm
 syscalls.c:130:9:_sbrk	8	static
 syscalls.c:153:5:_close	0	static
 syscalls.c:159:5:_fstat	0	static
