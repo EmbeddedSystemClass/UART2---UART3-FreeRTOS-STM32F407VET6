@@ -350,7 +350,7 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
 
 	if (huart-> Instance == USART2)
 	{
-		if(TxXferSize == 0 ) // кака?-то ошибка
+		if(TxXferSize == 0 ) // пїЅпїЅпїЅпїЅ?-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 		{
 			//printf(". HAL_UART_TxCpltCallback count=%d  size=%d \n",count,size);
 			HAL_UART_Transmit_IT(huart, (uint8_t *)(txMaster),MasterToTransfer);
@@ -365,7 +365,7 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
 	}
 	else if (huart-> Instance == USART3) // SLAVE
 	{
-		if(TxXferSize == 0 ) // кака?-то ошибка
+		if(TxXferSize == 0 ) // пїЅпїЅпїЅпїЅ?-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 		{
 			//printf(". HAL_UART_TxCpltCallback count=%d  size=%d \n",count,size);
 			HAL_UART_Transmit_IT(huart, (uint8_t *)(txSlave),SlaveToTransfer);
@@ -386,10 +386,10 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
-	// ВАЖНО , ЧТОБ? HAL_UART_RxCpltCallback завершилас? до прихода следу?щего байта !!!
-	// точнее пока следу?щий байт приходит , у нас еще ест? врем?, а вот следу?щий за следу?щим уже начнет затират? перед ним
-	// По-?тому все здес? делаем быстро !
-	// Иначе ...
+	// пїЅпїЅпїЅпїЅпїЅ , пїЅпїЅпїЅпїЅ? HAL_UART_RxCpltCallback пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ? пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ?пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ !!!
+	// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ?пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ , пїЅ пїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅ? пїЅпїЅпїЅпїЅ?, пїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ?пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ?пїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ? пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ
+	// пїЅпїЅ-?пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ? пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ !
+	// пїЅпїЅпїЅпїЅпїЅ ...
 
 
 	if (huart-> Instance == USART2)
@@ -398,7 +398,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 		uint16_t RxXferSize=huart->RxXferSize;
 		//printf("HAL_UART_RxCpltCallback !");
 
-		if(RxXferSize == 0) // похоже на сбой
+		if(RxXferSize == 0) // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ
 		{
 			printf("HAL_UART_RxCpltCallback Master????");
 		}
@@ -415,7 +415,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 			/*we can switch context if necessary. */
 			if( xHigherPriorityTaskWoken )
 			{
-				portYIELD_FROM_ISR(xHigherPriorityTaskWoken); //дл? ARM7
+				portYIELD_FROM_ISR(xHigherPriorityTaskWoken); //пїЅпїЅ? ARM7
 			}
 		}
 		HAL_UART_Receive_IT(huart, (uint8_t *)(rxMasterISR),1);
@@ -425,7 +425,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 		uint16_t RxXferCount=huart->RxXferCount;
 		uint16_t RxXferSize=huart->RxXferSize;
 
-		if(RxXferSize == 0) // похоже на сбой
+		if(RxXferSize == 0) // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ
 		{
 			printf("HAL_UART_RxCpltCallback Slave????");
 		}
@@ -444,8 +444,8 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 			{
 				// Actual macro used here is port specific.
 				//taskYIELD_FROM_ISR ();
-				portYIELD_FROM_ISR(xHigherPriorityTaskWoken); //дл? ARM7
-				//taskYIELD() // дл? AVR
+				portYIELD_FROM_ISR(xHigherPriorityTaskWoken); //пїЅпїЅ? ARM7
+				//taskYIELD() // пїЅпїЅ? AVR
 			}
 			//printf("HAL_UART_RxCpltCallback Slave\n");
 		}
@@ -471,7 +471,7 @@ void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart)
 		printf("< RxXferCount=%d RxXferSize=%d\n",RxXferCount,RxXferSize);
 
 		HAL_UART_Receive_IT(phuartSlave, (uint8_t *)(rxSlaveISR),1);
-		// проблема в приемном буфере, ПЕРЕПОЛНЕНИЕ, не все вытащили ДО прихода следу?щей пачки данных
+		// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ?пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	}
 
 }
@@ -542,7 +542,7 @@ void StartDefaultTask(void *argument)
 
 	MasterToTransfer=0;
 
-	// Об?зател?но сначала запускаем прием!
+	// пїЅпїЅ?пїЅпїЅпїЅпїЅпїЅ?пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ!
 	if(res=HAL_UART_Receive_IT(phuartMaster, (uint8_t *)rxMasterISR, 1) == HAL_OK)
 		; //printf("HAL_OK\n");
 	else if(res = HAL_ERROR)
@@ -559,7 +559,7 @@ void StartDefaultTask(void *argument)
 		if(HAL_GPIO_ReadPin(KEY2_GPIO_Port, KEY2_Pin) == GPIO_PIN_SET)
 		{
 
-			for(int ii=0; ii< 1; ii++) // ?то чтобы дребезга не было
+			for(int ii=0; ii< 1; ii++) // ?пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ
 				vTaskDelay(250);
 
 			printf("\n ---- %d -----\n",jj);
@@ -570,7 +570,7 @@ void StartDefaultTask(void *argument)
 
 			if(jj*(MasterToTransfer+1) >= sizeof(txMaster) )
 			{
-				MasterToTransfer=jj*(MasterToTransfer+1) -  sizeof(txMaster); /// остаток массива
+				MasterToTransfer=jj*(MasterToTransfer+1) -  sizeof(txMaster); /// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 			}
 
 			if( MasterSendATCommand (phuartMaster, (uint8_t *)(txMaster+jj*MasterToTransfer), MasterToTransfer,(uint8_t *)rx1Master, &wasReaddenMaster,rxQueueMaster, xMaxExpectedBlockTime, echoON) != 1)
@@ -591,7 +591,7 @@ void StartDefaultTask(void *argument)
 
 				for(int ii=0; ii< received ; ii++)
 				{
-					printf("%0.2X ",rx1Master[ii]);
+					printf("%0.2X (%c)",rx1Master[ii],rx1Master[ii]);
 				}
 
 				printf("\n");
@@ -625,7 +625,7 @@ void StartTask02(void *argument)
 
 	printf("StartTask02 Slave\n");
 
-	// Об?зател?но сначала запускаем прием
+	// пїЅпїЅ?пїЅпїЅпїЅпїЅпїЅ?пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 	if(res=HAL_UART_Receive_IT(phuartSlave, (uint8_t *)rxSlaveISR, 1) == HAL_OK)
 		; //printf("HAL_OK\n");
 	else if(res = HAL_ERROR)
