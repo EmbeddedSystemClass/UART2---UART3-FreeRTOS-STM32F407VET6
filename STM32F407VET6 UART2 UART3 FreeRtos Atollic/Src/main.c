@@ -27,7 +27,7 @@
 
 #include "task.h"
 #include "semphr.h"
-
+#include <stdio.h>
 #include "at_commands.h"
 /* USER CODE END Includes */
 
@@ -74,17 +74,17 @@ void StartTask02(void *argument); // for v2
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-volatile uint8_t txMaster[200];
-volatile uint8_t rxMasterISR[200];
-volatile uint8_t rx1Master[200];
-volatile uint8_t MasterToTransfer=0;
-volatile uint16_t wasReaddenMaster=0;
-volatile uint8_t echoON=1;
+uint8_t txMaster[200];
+uint8_t rxMasterISR[200];
+uint8_t rx1Master[200];
+uint8_t MasterToTransfer=0;
+uint8_t echoON=1;
+uint16_t wasReaddenMaster=0;
 
-volatile uint8_t txSlave[200];
-volatile uint8_t rxSlaveISR[200];
-volatile uint8_t SlaveToTransfer=0;
-volatile uint8_t rx1Slave[200];
+uint8_t txSlave[200];
+uint8_t rxSlaveISR[200];
+uint8_t SlaveToTransfer=0;
+uint8_t rx1Slave[200];
 
 //volatile uint8_t tx1[200];
 
@@ -355,7 +355,7 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
 			//printf(". HAL_UART_TxCpltCallback count=%d  size=%d \n",count,size);
 			HAL_UART_Transmit_IT(huart, (uint8_t *)(txMaster),MasterToTransfer);
 		}
-		else if (TxXferSize > 0 & TxXferCount < TxXferSize)
+		else if ((TxXferSize > 0) & (TxXferCount < TxXferSize))
 		{
 			if(TxXferCount>0)
 				HAL_UART_Transmit_IT(huart, (uint8_t *)(txMaster+TxXferSize-TxXferCount),TxXferCount);
@@ -371,7 +371,7 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
 			HAL_UART_Transmit_IT(huart, (uint8_t *)(txSlave),SlaveToTransfer);
 
 		}
-		else if (TxXferSize > 0 & TxXferCount < TxXferSize)
+		else if ((TxXferSize > 0) & (TxXferCount < TxXferSize))
 		{
 			if(TxXferCount>0)
 				HAL_UART_Transmit_IT(huart, (uint8_t *)(txSlave+TxXferSize-TxXferCount),TxXferCount);
@@ -501,17 +501,17 @@ uint8_t* stateUART(HAL_UART_StateTypeDef State)
 {
 	switch(State)
 	{
-	case HAL_UART_STATE_RESET: 		return "HAL_UART_STATE_RESET";
-	case HAL_UART_STATE_READY: 		return "HAL_UART_STATE_READY";
-	case HAL_UART_STATE_BUSY: 		return "HAL_UART_STATE_BUSY";
-	case HAL_UART_STATE_BUSY_TX: 	return "HAL_UART_STATE_BUSY_TX";
-	case HAL_UART_STATE_BUSY_RX: 	return "HAL_UART_STATE_BUSY_RX";
-	case HAL_UART_STATE_BUSY_TX_RX: return "HAL_UART_STATE_BUSY_TX_RX";
-	case HAL_UART_STATE_TIMEOUT: 	return "HAL_UART_STATE_TIMEOUT";
-	case HAL_UART_STATE_ERROR: 		return "HAL_UART_STATE_ERROR";
-	default : 						return "?????";
+	case HAL_UART_STATE_RESET: 		return (uint8_t*)"HAL_UART_STATE_RESET";
+	case HAL_UART_STATE_READY: 		return (uint8_t*)"HAL_UART_STATE_READY";
+	case HAL_UART_STATE_BUSY: 		return (uint8_t*)"HAL_UART_STATE_BUSY";
+	case HAL_UART_STATE_BUSY_TX: 	return (uint8_t*)"HAL_UART_STATE_BUSY_TX";
+	case HAL_UART_STATE_BUSY_RX: 	return (uint8_t*)"HAL_UART_STATE_BUSY_RX";
+	case HAL_UART_STATE_BUSY_TX_RX: return (uint8_t*)"HAL_UART_STATE_BUSY_TX_RX";
+	case HAL_UART_STATE_TIMEOUT: 	return (uint8_t*)"HAL_UART_STATE_TIMEOUT";
+	case HAL_UART_STATE_ERROR: 		return (uint8_t*)"HAL_UART_STATE_ERROR";
+	default : 						return (uint8_t*)"?????";
 	}
-	return "???";
+	return (uint8_t*)"???";
 }
 
 /* USER CODE END 4 */
@@ -543,11 +543,11 @@ void StartDefaultTask(void *argument)
 	MasterToTransfer=0;
 
 	// ��?�����?�� ������� ��������� �����!
-	if(res=HAL_UART_Receive_IT(phuartMaster, (uint8_t *)rxMasterISR, 1) == HAL_OK)
+	if((res=HAL_UART_Receive_IT(phuartMaster, (uint8_t *)rxMasterISR, 1)) == HAL_OK)
 		; //printf("HAL_OK\n");
-	else if(res = HAL_ERROR)
+	else if(res == HAL_ERROR)
 		printf("Master < HAL_ERROR\n");
-	else  if(res = HAL_BUSY)
+	else  if(res == HAL_BUSY)
 		printf("Master < HAL_BUSY\n");
 
 	const TickType_t xMaxExpectedBlockTime = pdMS_TO_TICKS( 50 );
@@ -591,7 +591,7 @@ void StartDefaultTask(void *argument)
 
 				for(int ii=0; ii< received ; ii++)
 				{
-					printf("%0.2X (%c)",rx1Master[ii],rx1Master[ii]);
+					printf("%02X (%c)",rx1Master[ii],rx1Master[ii]);
 				}
 
 				printf("\n");
@@ -626,11 +626,11 @@ void StartTask02(void *argument)
 	printf("StartTask02 Slave\n");
 
 	// ��?�����?�� ������� ��������� �����
-	if(res=HAL_UART_Receive_IT(phuartSlave, (uint8_t *)rxSlaveISR, 1) == HAL_OK)
+	if((res=HAL_UART_Receive_IT(phuartSlave, (uint8_t *)rxSlaveISR, 1)) == HAL_OK)
 		; //printf("HAL_OK\n");
-	else if(res = HAL_ERROR)
+	else if(res == HAL_ERROR)
 		printf("Slave HAL_ERROR\n");
-	else  if(res = HAL_BUSY)
+	else  if(res == HAL_BUSY)
 		printf("Slave HAL_BUSY\n");
 
 
@@ -646,7 +646,7 @@ void StartTask02(void *argument)
 
 			for(int ii=0; ii< received ; ii++)
 			{
-				printf("%0.2X ",rx1Slave[ii]);
+				printf("%02X ",rx1Slave[ii]);
 				txSlave[ii]=rx1Slave[ii];
 			}
 
